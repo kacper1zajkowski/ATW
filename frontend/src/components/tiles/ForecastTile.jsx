@@ -15,7 +15,7 @@ function shortDay(dateStr) {
   return new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short' });
 }
 
-export function ForecastTile({ forecast, index }) {
+export function ForecastTile({ forecast, summary, index }) {
   return (
     <BaseTile
       title="6-day forecast"
@@ -44,6 +44,12 @@ export function ForecastTile({ forecast, index }) {
           );
         })}
       </div>
+
+      {summary && (
+        <p className="mt-3 border-t border-slate-700/50 pt-3 text-xs leading-relaxed text-slate-400">
+          {summary}
+        </p>
+      )}
     </BaseTile>
   );
 }
