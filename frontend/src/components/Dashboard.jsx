@@ -30,10 +30,10 @@ export function Dashboard({ data }) {
         <UVTile uv={data.uv} index={2} />
       </div>
       <div className="md:col-span-2 lg:col-span-4">
-        <ForecastTile forecast={data.forecast} index={3} />
+        <ForecastTile forecast={data.forecast} summary={data.forecast_summary} index={3} />
       </div>
       <div className="lg:col-span-2">
-        <SatelliteTile satellite={data.satellite} location={data.location} index={4} />
+        <SatelliteTile location={data.location} index={4} />
       </div>
     </div>
   );

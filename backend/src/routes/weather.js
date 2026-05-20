@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { buildMockResponse } from '../mock/data.js';
 
 const router = Router();
 
@@ -11,9 +10,11 @@ router.get('/weather', async (req, res) => {
     return;
   }
 
-  await new Promise((r) => setTimeout(r, 300 + Math.random() * 500));
+  res.status(501).json({ error: 'Weather API not yet connected. Configure Apigee endpoints first.' });
+});
 
-  res.json(buildMockResponse(loc));
+router.post('/forecast-summary', async (req, res) => {
+  res.status(501).json({ error: 'Gemini API not yet connected. Configure Apigee endpoints first.' });
 });
 
 export default router;

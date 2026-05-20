@@ -33,7 +33,7 @@ export function SearchBar({ value, onChange, onSearch, loading, compact }) {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="City name or lat,lon coordinates…"
-          className="flex-1 bg-transparent px-3 text-sm text-slate-100 outline-none placeholder:text-slate-500"
+          className="flex-1 bg-transparent px-3 text-sm text-slate-100 outline-none placeholder:text-slate-500 placeholder:italic"
           disabled={loading}
           autoFocus={!compact}
         />

@@ -26,8 +26,9 @@ export default function App() {
       >
         {!hasContent && (
           <div className="mb-8 text-center">
-            <h1 className="mb-1 text-5xl font-bold tracking-tight text-white">ATW</h1>
-            <p className="text-slate-400">Environmental dashboard</p>
+            <h1 className="mb-2 text-5xl font-bold tracking-tight bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">ATW</h1>
+            <p className="text-slate-300 font-medium">All things weather.</p>
+            <p className="mt-1 text-sm text-slate-500">Search any city or drop your coordinates.</p>
           </div>
         )}
 
@@ -59,11 +60,6 @@ export default function App() {
                 <span>
                   {state.data.location.lat.toFixed(3)}, {state.data.location.lon.toFixed(3)}
                 </span>
-                {state.data._meta.source === 'mock' && (
-                  <span className="rounded-full bg-amber-500/10 px-2 py-0.5 text-xs text-amber-400">
-                    mock data
-                  </span>
-                )}
               </div>
             )}
             <Dashboard data={state.status === 'success' ? state.data : null} />
