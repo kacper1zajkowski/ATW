@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { fetchWeatherData, ApiError } from '../api/weather';
+import { fetchWeatherData, fetchForecastSummary, ApiError } from '../api/weather';
 
 export function useWeatherData() {
   const [state, setState] = useState({ status: 'idle' });
@@ -10,6 +10,15 @@ export function useWeatherData() {
     try {
       const data = await fetchWeatherData(location.trim());
       setState({ status: 'success', data });
+
+      fetchForecastSummary(data.location, data.forecast).then(summary => {
+        if (summary) {
+          setState(prev => prev.status === 'success'
+            ? { ...prev, data: { ...prev.data, forecast_summary: summary } }
+            : prev
+          );
+        }
+      });
     } catch (err) {
       if (err instanceof ApiError) {
         setState({ status: 'error', message: err.message, code: err.status });
