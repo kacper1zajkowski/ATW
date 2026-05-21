@@ -60,7 +60,7 @@ router.get('/weather', async (req, res) => {
     const location = await geocode(loc);
 
     const weatherUrl = `${process.env.APIGEE_BASE_URL}/weather/v1/forecast?latitude=${location.lat}&longitude=${location.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,surface_pressure,visibility,weather_code,uv_index,uv_index_clear_sky&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,wind_speed_10m_max,uv_index_max,sunrise,sunset&forecast_days=7&wind_speed_unit=kmh&timezone=auto`;
-    const aqUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${location.lat}&longitude=${location.lon}&current=pm10,pm2_5,nitrogen_dioxide,ozone,carbon_monoxide,european_aqi`;
+    const aqUrl = `${process.env.APIGEE_BASE_URL}/aq/v1/air-quality?latitude=${location.lat}&longitude=${location.lon}&current=pm10,pm2_5,nitrogen_dioxide,ozone,carbon_monoxide,european_aqi`;
 
     const [weatherRes, aqRes] = await Promise.all([fetch(weatherUrl), fetch(aqUrl)]);
     const [weather, aq] = await Promise.all([weatherRes.json(), aqRes.json()]);
