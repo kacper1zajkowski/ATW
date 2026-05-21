@@ -16,3 +16,15 @@ export async function fetchWeatherData(location) {
 
   return res.json();
 }
+
+export async function fetchForecastSummary(location, forecast) {
+  const res = await fetch('/api/forecast-summary', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ location, forecast }),
+  });
+
+  if (!res.ok) return null;
+  const data = await res.json();
+  return data.summary ?? null;
+}
