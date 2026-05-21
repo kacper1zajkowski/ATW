@@ -116,7 +116,6 @@ router.get('/weather', async (req, res) => {
 });
 
 router.post('/forecast-summary', async (req, res) => {
-  console.log('[summary] body:', JSON.stringify(req.body)?.slice(0, 100));
   const { location, forecast } = req.body ?? {};
   if (!location || !forecast?.length) {
     return res.status(400).json({ error: 'Missing location or forecast data' });
@@ -129,7 +128,6 @@ router.post('/forecast-summary', async (req, res) => {
   const prompt = `You are a friendly weather assistant. Based on the 6-day forecast for ${location.name}, ${location.country}, write exactly 2 short sentences in natural language, summarizing the upcoming weather. Be concise and practical.\n\nForecast:\n${days}`;
 
   try {
-    console.log('[summary] calling Gemini via', process.env.APIGEE_BASE_URL);
     const geminiRes = await fetch(
       `${process.env.APIGEE_BASE_URL}/gemini/v1beta/models/gemini-3.1-flash-lite:generateContent`,
       {
@@ -142,15 +140,12 @@ router.post('/forecast-summary', async (req, res) => {
       }
     );
 
-    console.log('[summary] Gemini status:', geminiRes.status);
     const data = await geminiRes.json();
-    console.log('[summary] Gemini response:', JSON.stringify(data)?.slice(0, 200));
     const summary = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
     if (!summary) throw new Error('Empty response from Gemini');
 
     res.json({ summary });
   } catch (err) {
-    console.error('[summary] error:', err);
     res.status(502).json({ error: err.message ?? 'Failed to fetch summary' });
   }
 });
