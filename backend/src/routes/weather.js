@@ -139,9 +139,7 @@ router.post('/forecast-summary', async (req, res) => {
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: { maxOutputTokens: 256, temperature: 0.7 },
         }),
-      },
-      console.log('here'),
-      console.log(prompt)
+      }
     );
 
     console.log('[summary] Gemini status:', geminiRes.status);
