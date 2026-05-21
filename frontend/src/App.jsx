@@ -27,7 +27,7 @@ export default function App() {
         {!hasContent && (
           <div className="mb-8 text-center">
             <h1 className="mb-2 text-5xl font-bold tracking-tight bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">ATW</h1>
-            <p className="text-slate-300 font-medium">All things weather.</p>
+            <p className="text-slate-300 font-medium">All Things Weather</p>
             <p className="mt-1 text-sm text-slate-500">Search any city or drop your coordinates.</p>
           </div>
         )}
