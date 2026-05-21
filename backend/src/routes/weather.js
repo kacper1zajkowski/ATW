@@ -61,9 +61,10 @@ router.get('/weather', async (req, res) => {
 
     const weatherUrl = `${process.env.APIGEE_BASE_URL}/weather/v1/forecast?latitude=${location.lat}&longitude=${location.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,surface_pressure,visibility,weather_code,uv_index,uv_index_clear_sky&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,wind_speed_10m_max,uv_index_max,sunrise,sunset&forecast_days=7&wind_speed_unit=kmh&timezone=auto`;
     const aqUrl = `${process.env.APIGEE_BASE_URL}/aq/v1/air-quality?latitude=${location.lat}&longitude=${location.lon}&current=pm10,pm2_5,nitrogen_dioxide,ozone,carbon_monoxide,european_aqi`;
+    const pollenUrl = `${process.env.APIGEE_BASE_URL}/pollen?lat=${location.lat}&lng=${location.lon}`;
 
-    const [weatherRes, aqRes] = await Promise.all([fetch(weatherUrl), fetch(aqUrl)]);
-    const [weather, aq] = await Promise.all([weatherRes.json(), aqRes.json()]);
+    const [weatherRes, aqRes, pollenRes] = await Promise.all([fetch(weatherUrl), fetch(aqUrl), fetch(pollenUrl)]);
+    const [weather, aq, pollenData] = await Promise.all([weatherRes.json(), aqRes.json(), pollenRes.json()]);
 
     const c = weather.current;
     const d = weather.daily;
@@ -108,6 +109,16 @@ router.get('/weather', async (req, res) => {
         sunset: d.sunset[0]?.slice(11, 16) ?? '20:00',
       },
       forecast,
+      pollen: pollenData.data?.[0] ? {
+        grass: { risk: pollenData.data[0].Risk.grass_pollen, count: pollenData.data[0].Count.grass_pollen },
+        tree:  { risk: pollenData.data[0].Risk.tree_pollen,  count: pollenData.data[0].Count.tree_pollen  },
+        weed:  { risk: pollenData.data[0].Risk.weed_pollen,  count: pollenData.data[0].Count.weed_pollen  },
+        species: {
+          grass: pollenData.data[0].Species.Grass,
+          tree:  pollenData.data[0].Species.Tree,
+          weed:  pollenData.data[0].Species.Weed,
+        },
+      } : null,
     });
   } catch (err) {
     const notFound = err.message?.includes('not found');
