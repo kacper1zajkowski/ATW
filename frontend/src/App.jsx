@@ -57,9 +57,14 @@ export default function App() {
                   {state.data.location.country ? `, ${state.data.location.country}` : ''}
                 </span>
                 <span>·</span>
-                <span>
+                <a
+                  href={`https://www.google.com/maps?q=${state.data.location.lat},${state.data.location.lon}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-slate-200 transition-colors"
+                >
                   {state.data.location.lat.toFixed(3)}, {state.data.location.lon.toFixed(3)}
-                </span>
+                </a>
               </div>
             )}
             <Dashboard data={state.status === 'success' ? state.data : null} />

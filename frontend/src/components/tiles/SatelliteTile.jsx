@@ -32,8 +32,8 @@ export function SatelliteTile({ location, index }) {
         <MapContainer
           center={[location.lat, location.lon]}
           zoom={10}
-          scrollWheelZoom={false}
-          zoomControl={false}
+          scrollWheelZoom={true}
+          zoomControl={true}
           attributionControl={false}
           style={{ height: '100%', width: '100%' }}
         >
