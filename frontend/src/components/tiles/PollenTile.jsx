@@ -33,11 +33,11 @@ function SpeciesSection({ title, risk, count, species }) {
         </div>
       </div>
       {nonZero.length > 0 && (
-        <ul className="ml-2 space-y-0.5">
+        <ul className="mt-1.5 space-y-1">
           {nonZero.map(([name, val]) => (
-            <li key={name} className="flex justify-between text-xs text-slate-400">
+            <li key={name} className="flex items-center justify-between text-sm text-slate-400">
               <span>{name}</span>
-              <span className="text-slate-500">{val}</span>
+              <span className="tabular-nums text-slate-500">{val}</span>
             </li>
           ))}
         </ul>
@@ -95,7 +95,7 @@ export function PollenTile({ pollen, index }) {
           onClick={() => setOpen(false)}
         >
           <div
-            className="w-full max-w-sm rounded-2xl border border-slate-700/40 bg-slate-800 p-5 shadow-xl"
+            className="w-full max-w-md rounded-2xl border border-slate-700/40 bg-slate-800 p-6 shadow-xl"
             onClick={e => e.stopPropagation()}
           >
             <div className="mb-4 flex items-center justify-between">

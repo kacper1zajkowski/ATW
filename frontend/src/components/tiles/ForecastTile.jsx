@@ -46,7 +46,7 @@ export function ForecastTile({ forecast, summary, index }) {
       </div>
 
       {summary && (
-        <p className="mt-3 border-t border-slate-700/50 pt-3 text-xs leading-relaxed text-slate-400">
+        <p className="mt-3 border-t border-slate-700/50 pt-3 text-sm leading-relaxed text-slate-300">
           {summary}
         </p>
       )}
