@@ -126,13 +126,12 @@ router.post('/forecast-summary', async (req, res) => {
     `${d.date}: ${d.condition.text}, max ${d.temp_max_c}°C, min ${d.temp_min_c}°C, rain ${d.precipitation_prob_pct}%, wind ${d.wind_kph} km/h`
   ).join('\n');
 
-  //const prompt = `You are a friendly weather assistant. Based on the 6-day forecast for ${location.name}, ${location.country}, write exactly 2 short sentences summarizing the upcoming weather. Be concise and practical.\n\nForecast:\n${days}`;
-  const prompt = `say "okay lets go" in capital letters`;
+  const prompt = `You are a friendly weather assistant. Based on the 6-day forecast for ${location.name}, ${location.country}, write exactly 2 short sentences in natural language, summarizing the upcoming weather. Be concise and practical.\n\nForecast:\n${days}`;
 
   try {
     console.log('[summary] calling Gemini via', process.env.APIGEE_BASE_URL);
     const geminiRes = await fetch(
-      `${process.env.APIGEE_BASE_URL}/gemini/v1beta/models/gemini-3-flash-preview:generateContent`,
+      `${process.env.APIGEE_BASE_URL}/gemini/v1beta/models/gemini-3.1-flash-lite:generateContent`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -140,7 +139,9 @@ router.post('/forecast-summary', async (req, res) => {
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: { maxOutputTokens: 256, temperature: 0.7 },
         }),
-      }
+      },
+      console.log('here'),
+      console.log(prompt)
     );
 
     console.log('[summary] Gemini status:', geminiRes.status);
