@@ -116,7 +116,44 @@ router.get('/weather', async (req, res) => {
 });
 
 router.post('/forecast-summary', async (req, res) => {
-  res.status(501).json({ error: 'Gemini API not yet connected. Configure Apigee endpoints first.' });
+  console.log('[summary] body:', JSON.stringify(req.body)?.slice(0, 100));
+  const { location, forecast } = req.body ?? {};
+  if (!location || !forecast?.length) {
+    return res.status(400).json({ error: 'Missing location or forecast data' });
+  }
+
+  const days = forecast.map(d =>
+    `${d.date}: ${d.condition.text}, max ${d.temp_max_c}°C, min ${d.temp_min_c}°C, rain ${d.precipitation_prob_pct}%, wind ${d.wind_kph} km/h`
+  ).join('\n');
+
+  //const prompt = `You are a friendly weather assistant. Based on the 6-day forecast for ${location.name}, ${location.country}, write exactly 2 short sentences summarizing the upcoming weather. Be concise and practical.\n\nForecast:\n${days}`;
+  const prompt = `say "okay lets go" in capital letters`;
+
+  try {
+    console.log('[summary] calling Gemini via', process.env.APIGEE_BASE_URL);
+    const geminiRes = await fetch(
+      `${process.env.APIGEE_BASE_URL}/gemini/v1beta/models/gemini-3-flash-preview:generateContent`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { maxOutputTokens: 256, temperature: 0.7 },
+        }),
+      }
+    );
+
+    console.log('[summary] Gemini status:', geminiRes.status);
+    const data = await geminiRes.json();
+    console.log('[summary] Gemini response:', JSON.stringify(data)?.slice(0, 200));
+    const summary = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+    if (!summary) throw new Error('Empty response from Gemini');
+
+    res.json({ summary });
+  } catch (err) {
+    console.error('[summary] error:', err);
+    res.status(502).json({ error: err.message ?? 'Failed to fetch summary' });
+  }
 });
 
 export default router;
