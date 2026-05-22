@@ -28,6 +28,24 @@ const WMO_CONDITIONS = {
 
 const UV_CATEGORIES = ['Low','Low','Low','Moderate','Moderate','Moderate','High','High','Very High','Very High','Extreme'];
 
+const MOON_PHASES = {
+  NEW_MOON:        { index: 0, name: 'New Moon' },
+  WAXING_CRESCENT: { index: 1, name: 'Waxing Crescent' },
+  FIRST_QUARTER:   { index: 2, name: 'First Quarter' },
+  WAXING_GIBBOUS:  { index: 3, name: 'Waxing Gibbous' },
+  FULL_MOON:       { index: 4, name: 'Full Moon' },
+  WANING_GIBBOUS:  { index: 5, name: 'Waning Gibbous' },
+  LAST_QUARTER:    { index: 6, name: 'Last Quarter' },
+  THIRD_QUARTER:   { index: 6, name: 'Last Quarter' },
+  WANING_CRESCENT: { index: 7, name: 'Waning Crescent' },
+};
+
+function moonAge(phaseIndex, illumination) {
+  const half = 29.53 / 2;
+  if (phaseIndex <= 4) return Math.round((illumination / 100) * half);
+  return Math.round(half + (1 - illumination / 100) * half);
+}
+
 function aqiCategory(aqi) {
   if (aqi <= 20) return { aqi_eu: 1, category: 'Good' };
   if (aqi <= 40) return { aqi_eu: 2, category: 'Fair' };
@@ -62,9 +80,10 @@ router.get('/weather', async (req, res) => {
     const weatherUrl = `${process.env.APIGEE_BASE_URL}/weather/v1/forecast?latitude=${location.lat}&longitude=${location.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,surface_pressure,visibility,weather_code,uv_index,uv_index_clear_sky&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,wind_speed_10m_max,uv_index_max,sunrise,sunset&forecast_days=7&wind_speed_unit=kmh&timezone=auto`;
     const aqUrl = `${process.env.APIGEE_BASE_URL}/aq/v1/air-quality?latitude=${location.lat}&longitude=${location.lon}&current=pm10,pm2_5,nitrogen_dioxide,ozone,carbon_monoxide,european_aqi`;
     const pollenUrl = `${process.env.APIGEE_BASE_URL}/pollen?lat=${location.lat}&lng=${location.lon}`;
+    const astronomyUrl = `${process.env.APIGEE_BASE_URL}/astronomy?lat=${location.lat}&long=${location.lon}`;
 
-    const [weatherRes, aqRes, pollenRes] = await Promise.all([fetch(weatherUrl), fetch(aqUrl), fetch(pollenUrl)]);
-    const [weather, aq, pollenData] = await Promise.all([weatherRes.json(), aqRes.json(), pollenRes.json()]);
+    const [weatherRes, aqRes, pollenRes, astronomyRes] = await Promise.all([fetch(weatherUrl), fetch(aqUrl), fetch(pollenUrl), fetch(astronomyUrl)]);
+    const [weather, aq, pollenData, astronomyData] = await Promise.all([weatherRes.json(), aqRes.json(), pollenRes.json(), astronomyRes.json()]);
 
     const c = weather.current;
     const d = weather.daily;
@@ -119,6 +138,19 @@ router.get('/weather', async (req, res) => {
           weed:  pollenData.data[0].Species.Weed,
         },
       } : null,
+      moon: astronomyData.astronomy ? (() => {
+        const a = astronomyData.astronomy;
+        const phase = MOON_PHASES[a.moon_phase] ?? MOON_PHASES.NEW_MOON;
+        const illumination = parseFloat(a.moon_illumination_percentage) || 0;
+        return {
+          phaseIndex: phase.index,
+          phaseName: phase.name,
+          illumination: Math.round(illumination),
+          age: moonAge(phase.index, illumination),
+          moonrise: a.moonrise,
+          moonset: a.moonset,
+        };
+      })() : null,
     });
   } catch (err) {
     const notFound = err.message?.includes('not found');
