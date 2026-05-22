@@ -81,15 +81,17 @@ export function PollenTile({ pollen, index }) {
           })}
         </div>
 
-        <button
-          onClick={() => setOpen(true)}
-          className="mt-4 w-full text-left text-xs text-slate-500 hover:text-slate-300 transition-colors"
-        >
-          Species breakdown →
-        </button>
+        {pollen.species && (
+          <button
+            onClick={() => setOpen(true)}
+            className="mt-4 w-full text-left text-xs text-slate-500 hover:text-slate-300 transition-colors"
+          >
+            Species breakdown →
+          </button>
+        )}
       </BaseTile>
 
-      {open && (
+      {open && pollen.species && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
           onClick={() => setOpen(false)}

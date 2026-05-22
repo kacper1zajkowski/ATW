@@ -128,16 +128,20 @@ router.get('/weather', async (req, res) => {
         sunset: d.sunset[0]?.slice(11, 16) ?? '20:00',
       },
       forecast,
-      pollen: pollenData.data?.[0] ? {
-        grass: { risk: pollenData.data[0].Risk.grass_pollen, count: pollenData.data[0].Count.grass_pollen },
-        tree:  { risk: pollenData.data[0].Risk.tree_pollen,  count: pollenData.data[0].Count.tree_pollen  },
-        weed:  { risk: pollenData.data[0].Risk.weed_pollen,  count: pollenData.data[0].Count.weed_pollen  },
-        species: {
-          grass: pollenData.data[0].Species.Grass,
-          tree:  pollenData.data[0].Species.Tree,
-          weed:  pollenData.data[0].Species.Weed,
-        },
-      } : null,
+      pollen: (() => {
+        const p = pollenData.data?.[0];
+        if (!p?.Risk || !p?.Count) return null;
+        return {
+          grass: { risk: p.Risk.grass_pollen, count: p.Count.grass_pollen },
+          tree:  { risk: p.Risk.tree_pollen,  count: p.Count.tree_pollen  },
+          weed:  { risk: p.Risk.weed_pollen,  count: p.Count.weed_pollen  },
+          species: p.Species ? {
+            grass: p.Species.Grass,
+            tree:  p.Species.Tree,
+            weed:  p.Species.Weed,
+          } : null,
+        };
+      })(),
       moon: astronomyData.astronomy ? (() => {
         const a = astronomyData.astronomy;
         const phase = MOON_PHASES[a.moon_phase] ?? MOON_PHASES.NEW_MOON;
