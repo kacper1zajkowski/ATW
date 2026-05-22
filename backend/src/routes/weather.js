@@ -172,7 +172,7 @@ router.post('/forecast-summary', async (req, res) => {
     `${d.date}: ${d.condition.text}, max ${d.temp_max_c}°C, min ${d.temp_min_c}°C, rain ${d.precipitation_prob_pct}%, wind ${d.wind_kph} km/h`
   ).join('\n');
 
-  const prompt = `You are a friendly weather assistant. Based on the 6-day forecast for ${location.name}, ${location.country}, write exactly 2 short sentences in natural language, summarizing the upcoming weather. Be concise and practical.\n\nForecast:\n${days}`;
+  const prompt = `You are a friendly weather assistant. Based on the 6-day forecast for ${location.name}, ${location.country}, write exactly 2 short sentences in natural language, summarizing the upcoming weather. Be concise and practical. Involve location name in sentences, city or land or area\n\nForecast:\n${days}`;
 
   try {
     const geminiRes = await fetch(
