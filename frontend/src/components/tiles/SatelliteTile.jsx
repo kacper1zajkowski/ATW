@@ -31,7 +31,7 @@ export function SatelliteTile({ location, index }) {
       <div className="overflow-hidden rounded-xl" style={{ height: 192 }}>
         <MapContainer
           center={[location.lat, location.lon]}
-          zoom={10}
+          zoom={5}
           scrollWheelZoom={true}
           zoomControl={true}
           attributionControl={false}
