@@ -1,5 +1,31 @@
+import { useState, useEffect, useRef } from 'react';
 import { Cloud, CloudRain, CloudSnow, CloudLightning, CloudSun, Sun, Droplets } from 'lucide-react';
 import { BaseTile } from './BaseTile';
+
+function TypewriterText({ text, speed = 18 }) {
+  const [displayed, setDisplayed] = useState('');
+  const indexRef = useRef(0);
+
+  useEffect(() => {
+    setDisplayed('');
+    indexRef.current = 0;
+    const id = setInterval(() => {
+      indexRef.current += 1;
+      setDisplayed(text.slice(0, indexRef.current));
+      if (indexRef.current >= text.length) clearInterval(id);
+    }, speed);
+    return () => clearInterval(id);
+  }, [text, speed]);
+
+  return (
+    <>
+      {displayed}
+      {displayed.length < text.length && (
+        <span className="inline-block w-0.5 h-3.5 bg-slate-400 ml-0.5 animate-pulse align-middle" />
+      )}
+    </>
+  );
+}
 
 const CONDITION_ICONS = {
   sunny:         Sun,
@@ -47,7 +73,7 @@ export function ForecastTile({ forecast, summary, index }) {
 
       {summary && (
         <p className="mt-3 border-t border-slate-700/50 pt-3 text-sm leading-relaxed text-slate-300">
-          {summary}
+          <TypewriterText text={summary} />
         </p>
       )}
     </BaseTile>
