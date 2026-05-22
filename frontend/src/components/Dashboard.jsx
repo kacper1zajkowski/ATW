@@ -5,6 +5,7 @@ import { UVTile } from './tiles/UVTile';
 import { ForecastTile } from './tiles/ForecastTile';
 import { SatelliteTile } from './tiles/SatelliteTile';
 import { PollenTile } from './tiles/PollenTile';
+import { MoonTile } from './tiles/MoonTile';
 
 export function Dashboard({ data }) {
   if (!data) {
@@ -39,6 +40,11 @@ export function Dashboard({ data }) {
       {data.pollen && (
         <div className="lg:col-span-2">
           <PollenTile pollen={data.pollen} index={5} />
+        </div>
+      )}
+      {data.moon && (
+        <div className="lg:col-span-4">
+          <MoonTile moon={data.moon} index={6} />
         </div>
       )}
     </div>
