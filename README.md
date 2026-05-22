@@ -1,4 +1,4 @@
-# ATW — All Things Weather
+# 🌍 ATW — All Things Weather
 
 > What's going on outside the window?
 
