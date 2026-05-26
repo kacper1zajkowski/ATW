@@ -28,7 +28,7 @@ config:
 flowchart LR
     UI([React UI<br/>Vite]) --> BFF([Node BFF<br/>Express])
     BFF --> Apigee([Apigee X<br/>Gateway])
-    Apigee --> Upstream([Upstream APIs<br/>Open-Meteo · Ambee<br/>ipgeolocation · Gemini])
+    Apigee --> Upstream([Upstream APIs,<br/> Open-Meteo, Ambee<br/>ipgeolocation, Gemini])
 ```
 
 
