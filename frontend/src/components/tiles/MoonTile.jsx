@@ -106,15 +106,15 @@ export function MoonTile({ moon, index }) {
       accentColor="border-l-slate-400"
       index={index}
     >
-      <div className="flex gap-4 items-center">
-        <div className="shrink-0" style={{ width: 160, height: 160 }}>
+      <div className="flex gap-4 items-center flex-col sm:flex-row">
+        <div className="shrink-0 w-32 h-32 sm:w-40 sm:h-40">
           <Canvas camera={{ position: [0, 0, 3], fov: 45 }} gl={{ alpha: true }}>
             <MoonSphere phaseIndex={moon.phaseIndex} />
           </Canvas>
         </div>
 
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-4">
+        <div className="flex-1 min-w-0 w-full">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
             <div>
               <p className="text-lg font-semibold text-slate-100">{moon.phaseName}</p>
               <p className="text-sm text-slate-400">{moon.illumination}% illuminated</p>
