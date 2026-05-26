@@ -89,4 +89,4 @@
   <RouteRule name="noroute"/>
 </ProxyEndpoint>
 
-<!--A lot of <Condition>cache.status = "MISS"</Condition> repetition, need further investigate-->
+<!--A lot of cache.status = "MISS" repetition, need further investigate-->
