@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AM-PrepareGeminiRequest">
+  <DisplayName>AM-PrepareGeminiRequest</DisplayName>
+  <AssignTo createNew="true" transport="http" type="request">geminiRequest</AssignTo>
+  <Set>
+    <Verb>POST</Verb>
+    <Path>/v1beta/models/gemini-3.1-flash-lite:generateContent</Path> <!--todo: llm model as variable for easy switching-->
+    <Headers>
+      <Header name="Content-Type">application/json</Header>
+    </Headers>
+    <QueryParams>
+      <QueryParam name="key">{private.gemini_api_key}</QueryParam>
+    </QueryParams>
+    <Payload contentType="application/json">{gemini.body}</Payload>
+  </Set>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</AssignMessage>

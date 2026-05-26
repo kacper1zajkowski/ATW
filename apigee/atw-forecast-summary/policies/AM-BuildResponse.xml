@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AM-BuildResponse">
+  <DisplayName>AM-BuildResponse</DisplayName>
+  <AssignTo createNew="true" transport="http" type="response"/>
+  <Set>
+    <Payload contentType="application/json">{summary.payload}</Payload>
+    <StatusCode>200</StatusCode>
+    <Headers>
+      <Header name="Content-Type">application/json</Header>
+    </Headers>
+  </Set>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</AssignMessage>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="4" name="atw-forecast-summary">
+  <DisplayName/>
+  <Description/>
+  <CreatedAt>1779794310748</CreatedAt>
+  <LastModifiedAt>1779794310748</LastModifiedAt>
+  <BasePaths>/v1/forecast-summary</BasePaths>
+  <Policies>
+    <Policy>VAK-ConsumerKey</Policy>
+    <Policy>KV-LoadSecrets</Policy>
+    <Policy>JS-BuildGeminiPrompt</Policy>
+    <Policy>AM-PrepareGeminiRequest</Policy>
+    <Policy>SC-Gemini</Policy>
+    <Policy>JS-ExtractSummary</Policy>
+    <Policy>AM-BuildResponse</Policy>
+    <Policy>FC-Common</Policy>
+  </Policies>
+  <ProxyEndpoints>
+    <ProxyEndpoint>default</ProxyEndpoint>
+  </ProxyEndpoints>
+  <Resources>
+    <Resource>jsc://build-gemini-prompt.js</Resource>
+    <Resource>jsc://extract-summary.js</Resource>
+  </Resources>
+  <TargetEndpoints>
+    <TargetEndpoint>default</TargetEndpoint>
+  </TargetEndpoints>
+</APIProxy>
