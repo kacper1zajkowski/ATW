@@ -6,8 +6,8 @@ export class ApiError extends Error {
   }
 }
 
-export async function fetchWeatherData(location) {
-  const res = await fetch(`/api/weather?location=${encodeURIComponent(location)}`);
+export async function fetchWeatherData(query) {
+  const res = await fetch(`/api/v1/weather?q=${encodeURIComponent(query)}`);
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -18,7 +18,7 @@ export async function fetchWeatherData(location) {
 }
 
 export async function fetchForecastSummary(location, forecast) {
-  const res = await fetch('/api/forecast-summary', {
+  const res = await fetch('/api/v1/forecast-summary', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ location, forecast }),
