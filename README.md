@@ -16,6 +16,7 @@ An over-engineered environmental dashboard built as a hands-on case study for **
 - **Moon phase** — interactive 3D moon with real-time illumination, moonrise/moonset
 
 ## Architecture
+###### *I strongly recommend viewing this repo on PC/browser, GitHub mobile doesn't support Mermaid diagrams* 🙃
 
 Monorepo with a thin BFF pattern:
 
