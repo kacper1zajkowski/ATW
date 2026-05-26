@@ -16,7 +16,7 @@ app.use(cors({ origin: CORS_ORIGIN }));
 app.use(express.json());
 
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
-app.use('/api', weatherRouter);
+app.use('/api/v1', weatherRouter);
 
 app.listen(PORT, () => {
   console.log(`[backend] listening on http://localhost:${PORT}`);
