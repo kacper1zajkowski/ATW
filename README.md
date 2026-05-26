@@ -102,11 +102,6 @@ flowchart TD
 
 ### Source Code
 - Couple repetitions in **/atw-weather/targets/default.xml** policy
-- UI Refactor for mobile screens
-
-### Deploy
-- Firebase hosting for UI
-- Cloud Run for BFF
 
 ### IaC & CICD
 - Terraform files for apigee policies
