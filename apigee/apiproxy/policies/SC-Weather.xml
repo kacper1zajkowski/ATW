@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout continueOnError="false" enabled="true" name="SC-Weather">
+  <DisplayName>SC-Weather</DisplayName>
+  <Request variable="weatherRequest"/>
+  <Response>sc.weather.response</Response>
+  <HTTPTargetConnection>
+    <URL>https://api.open-meteo.com/v1/forecast</URL>
+  </HTTPTargetConnection>
+</ServiceCallout>

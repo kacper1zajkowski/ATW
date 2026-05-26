@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AM-BuildResponse">
+  <DisplayName>AM-BuildResponse</DisplayName>
+  <AssignTo createNew="true" transport="http" type="response"/>
+  <Set>
+    <Payload contentType="application/json">{aggregated.payload}</Payload>
+    <StatusCode>200</StatusCode>
+    <Headers>
+      <Header name="Content-Type">application/json</Header>
+      <Header name="X-Cache-Status">{cache.status}</Header> <!--changed from X-Apigee-Cache, because GCP probably strip X-Apigee for internal usage only-->
+    </Headers>
+  </Set>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</AssignMessage>

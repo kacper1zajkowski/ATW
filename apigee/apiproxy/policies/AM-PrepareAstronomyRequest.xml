@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AM-PrepareAstronomyRequest">
+  <DisplayName>AM-PrepareAstronomyRequest</DisplayName>
+  <AssignTo createNew="true" transport="http" type="request">astronomyRequest</AssignTo>
+  <Set>
+    <Verb>GET</Verb>
+    <Path>/v3/astronomy</Path>
+    <QueryParams>
+      <QueryParam name="apiKey">{private.ipgeolocation_api_key}</QueryParam>
+      <QueryParam name="lat">{location.lat}</QueryParam>
+      <QueryParam name="long">{location.lon}</QueryParam>
+    </QueryParams>
+  </Set>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</AssignMessage>

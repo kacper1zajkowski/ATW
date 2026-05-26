@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AM-PrepareGeocodeRequest">
+  <DisplayName>AM-PrepareGeocodeRequest</DisplayName>
+  <AssignTo createNew="true" transport="http" type="request">geocodeRequest</AssignTo>
+  <Set>
+    <Verb>GET</Verb>
+    <Path>/v1/search</Path>
+    <QueryParams>
+      <QueryParam name="name">{geocode.q}</QueryParam>
+      <QueryParam name="count">1</QueryParam>
+      <QueryParam name="language">en</QueryParam>
+      <QueryParam name="format">json</QueryParam>
+    </QueryParams>
+  </Set>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</AssignMessage>

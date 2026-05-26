@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="17" name="atw-weather">
+  <DisplayName/>
+  <Description>prod-alpha-v1 w/ cache</Description>
+  <CreatedAt>1779797640241</CreatedAt>
+  <LastModifiedAt>1779797640241</LastModifiedAt>
+  <BasePaths>/v1/weather</BasePaths>
+  <Policies>
+    <Policy>VAK-ConsumerKey</Policy>
+    <Policy>JS-NormalizeQuery</Policy>
+    <Policy>AM-PrepareGeocodeRequest</Policy>
+    <Policy>SC-Geocode</Policy>
+    <Policy>EV-Geocode</Policy>
+    <Policy>AM-PrepareWeatherRequest</Policy>
+    <Policy>SC-Weather</Policy>
+    <Policy>JS-AggregateResponse</Policy>
+    <Policy>AM-BuildResponse</Policy>
+    <Policy>AM-PrepareAirQualityRequest</Policy>
+    <Policy>SC-AirQuality</Policy>
+    <Policy>KV-LoadSecrets</Policy>
+    <Policy>AM-PreparePollenRequest</Policy>
+    <Policy>SC-Pollen</Policy>
+    <Policy>AM-PrepareAstronomyRequest</Policy>
+    <Policy>SC-Astronomy</Policy>
+    <Policy>FC-Common</Policy>
+    <Policy>JS-RoundCoords</Policy>
+    <Policy>LC-WeatherAggregated</Policy>
+    <Policy>PC-WeatherAggregated</Policy>
+    <Policy>JS-SetCacheStatus</Policy>
+  </Policies>
+  <ProxyEndpoints>
+    <ProxyEndpoint>default</ProxyEndpoint>
+  </ProxyEndpoints>
+  <Resources>
+    <Resource>jsc://normalize-query.js</Resource>
+    <Resource>jsc://aggregate.js</Resource>
+    <Resource>jsc://round-coords.js</Resource>
+    <Resource>jsc://set-cache-status.js</Resource>
+  </Resources>
+  <TargetEndpoints>
+    <TargetEndpoint>default</TargetEndpoint>
+  </TargetEndpoints>
+</APIProxy>

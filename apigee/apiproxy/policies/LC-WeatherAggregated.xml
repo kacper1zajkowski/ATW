@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<LookupCache continueOnError="false" enabled="true" name="LC-WeatherAggregated">
+  <DisplayName>LC-WeatherAggregated</DisplayName>
+  <CacheKey>
+    <Prefix>weather-aggregated</Prefix>
+    <KeyFragment ref="lat_rounded"/>
+    <KeyFragment ref="lon_rounded"/>
+  </CacheKey>
+  <Scope>Global</Scope>
+  <AssignTo>aggregated.payload</AssignTo>
+</LookupCache>

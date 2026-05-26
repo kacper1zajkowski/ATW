@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout continueOnError="true" enabled="true" name="SC-AirQuality">
+  <DisplayName>SC-AirQuality</DisplayName>
+  <Request clearPayload="true" variable="airQualityRequest">
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  </Request>
+  <Response>sc.air-quality.response</Response>
+  <HTTPTargetConnection>
+    <URL>https://air-quality-api.open-meteo.com</URL>
+  </HTTPTargetConnection>
+</ServiceCallout>

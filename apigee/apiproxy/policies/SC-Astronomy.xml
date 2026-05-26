@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout continueOnError="true" enabled="true" name="SC-Astronomy">
+  <DisplayName>SC-Astronomy</DisplayName>
+  <Request clearPayload="true" variable="astronomyRequest">
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  </Request>
+  <Response>sc.astronomy.response</Response>
+  <HTTPTargetConnection>
+    <URL>https://api.ipgeolocation.io</URL>
+  </HTTPTargetConnection>
+</ServiceCallout>

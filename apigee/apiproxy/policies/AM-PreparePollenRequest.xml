@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AM-PreparePollenRequest">
+  <DisplayName>AM-PreparePollenRequest</DisplayName>
+  <AssignTo createNew="true" transport="http" type="request">pollenRequest</AssignTo>
+  <Set>
+    <Verb>GET</Verb>
+    <Path>/latest/pollen/by-lat-lng</Path>
+    <Headers>
+      <Header name="x-api-key">{private.ambee_api_key}</Header>
+      <Header name="Content-Type">application/json</Header>
+    </Headers>
+    <QueryParams>
+      <QueryParam name="lat">{location.lat}</QueryParam>
+      <QueryParam name="lng">{location.lon}</QueryParam>
+    </QueryParams>
+  </Set>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</AssignMessage>

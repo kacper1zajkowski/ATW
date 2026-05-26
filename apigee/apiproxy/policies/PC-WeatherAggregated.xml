@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PopulateCache continueOnError="false" enabled="true" name="PC-WeatherAggregated">
+  <DisplayName>PC-WeatherAggregated</DisplayName>
+  <CacheKey>
+    <Prefix>weather-aggregated</Prefix>
+    <KeyFragment ref="lat_rounded"/>
+    <KeyFragment ref="lon_rounded"/>
+  </CacheKey>
+  <Scope>Global</Scope>
+  <Source>aggregated.payload</Source>
+  <ExpirySettings>
+    <TimeoutInSec>300</TimeoutInSec>
+  </ExpirySettings>
+</PopulateCache>

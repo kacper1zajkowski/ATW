@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+  <Description/>
+  <FaultRules/>
+  <PreFlow name="PreFlow">
+    <Request>
+      <Step>
+        <Name>FC-Common</Name>
+      </Step>
+      <Step>
+        <Name>JS-NormalizeQuery</Name>
+      </Step>
+      <Step>
+        <Condition>requires_geocode = true</Condition>
+        <Name>AM-PrepareGeocodeRequest</Name>
+      </Step>
+      <Step>
+        <Condition>requires_geocode = true</Condition>
+        <Name>SC-Geocode</Name>
+      </Step>
+      <Step>
+        <Condition>requires_geocode = true</Condition>
+        <Name>EV-Geocode</Name>
+      </Step>
+      <Step>
+        <Name>JS-RoundCoords</Name>
+      </Step>
+      <Step>
+        <Name>LC-WeatherAggregated</Name>
+      </Step>
+      <Step>
+        <Name>JS-SetCacheStatus</Name>
+      </Step>
+      <Step>
+        <Condition>cache.status = "MISS"</Condition>
+        <Name>AM-PrepareWeatherRequest</Name>
+      </Step>
+      <Step>
+        <Condition>cache.status = "MISS"</Condition>
+        <Name>SC-Weather</Name>
+      </Step>
+      <Step>
+        <Condition>cache.status = "MISS"</Condition>
+        <Name>AM-PrepareAirQualityRequest</Name>
+      </Step>
+      <Step>
+        <Condition>cache.status = "MISS"</Condition>
+        <Name>SC-AirQuality</Name>
+      </Step>
+      <Step>
+        <Condition>cache.status = "MISS"</Condition>
+        <Name>AM-PreparePollenRequest</Name>
+      </Step>
+      <Step>
+        <Condition>cache.status = "MISS"</Condition>
+        <Name>SC-Pollen</Name>
+      </Step>
+      <Step>
+        <Condition>cache.status = "MISS"</Condition>
+        <Name>AM-PrepareAstronomyRequest</Name>
+      </Step>
+      <Step>
+        <Condition>cache.status = "MISS"</Condition>
+        <Name>SC-Astronomy</Name>
+      </Step>
+      <Step>
+        <Condition>cache.status = "MISS"</Condition>
+        <Name>JS-AggregateResponse</Name>
+      </Step>
+      <Step>
+        <Condition>cache.status = "MISS"</Condition>
+        <Name>PC-WeatherAggregated</Name>
+      </Step>
+      <Step>
+        <Name>AM-BuildResponse</Name>
+      </Step>
+    </Request>
+    <Response/>
+  </PreFlow>
+  <PostFlow name="PostFlow">
+    <Request/>
+    <Response/>
+  </PostFlow>
+  <Flows/>
+  <HTTPProxyConnection>
+    <BasePath>/v1/weather</BasePath>
+    <Properties/>
+  </HTTPProxyConnection>
+  <RouteRule name="noroute"/>
+</ProxyEndpoint>
+
+<!--A lot of <Condition>cache.status = "MISS"</Condition> repetition, need further investigate-->

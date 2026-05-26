@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables continueOnError="false" enabled="true" name="EV-Geocode">
+  <DisplayName>EV-Geocode</DisplayName>
+  <Source>sc.geocode.response</Source>
+  <JSONPayload>
+    <Variable name="location.name">
+      <JSONPath>$.results[0].name</JSONPath>
+    </Variable>
+    <Variable name="location.country">
+      <JSONPath>$.results[0].country_code</JSONPath>
+    </Variable>
+    <Variable name="location.lat" type="float">
+      <JSONPath>$.results[0].latitude</JSONPath>
+    </Variable>
+    <Variable name="location.lon" type="float">
+      <JSONPath>$.results[0].longitude</JSONPath>
+    </Variable>
+  </JSONPayload>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</ExtractVariables>

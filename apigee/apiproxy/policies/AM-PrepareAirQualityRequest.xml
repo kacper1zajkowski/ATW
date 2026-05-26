@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AM-PrepareAirQualityRequest">
+  <DisplayName>AM-PrepareAirQualityRequest</DisplayName>
+  <AssignTo createNew="true" transport="http" type="request">airQualityRequest</AssignTo>
+  <Set>
+    <Verb>GET</Verb>
+    <Path>/v1/air-quality</Path>
+    <QueryParams>
+      <QueryParam name="latitude">{location.lat}</QueryParam>
+      <QueryParam name="longitude">{location.lon}</QueryParam>
+      <QueryParam name="current">pm10,pm2_5,nitrogen_dioxide,ozone,carbon_monoxide,european_aqi</QueryParam> <!--Most popular AIQ types-->
+    </QueryParams>
+  </Set>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</AssignMessage>

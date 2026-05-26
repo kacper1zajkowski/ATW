@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout continueOnError="true" enabled="true" name="SC-Pollen">
+  <DisplayName>SC-Pollen</DisplayName>
+  <Properties/>
+  <Request clearPayload="true" variable="pollenRequest">
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  </Request>
+  <Response>sc.pollen.response</Response>
+  <HTTPTargetConnection>
+    <Properties/>
+    <URL>https://api.ambeedata.com</URL>
+  </HTTPTargetConnection>
+</ServiceCallout>

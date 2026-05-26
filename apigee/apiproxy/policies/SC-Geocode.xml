@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout continueOnError="false" enabled="true" name="SC-Geocode">
+  <DisplayName>SC-Geocode</DisplayName>
+  <Request variable="geocodeRequest"/>
+  <Response>sc.geocode.response</Response>
+  <HTTPTargetConnection>
+    <URL>https://geocoding-api.open-meteo.com</URL>
+  </HTTPTargetConnection>
+</ServiceCallout>
