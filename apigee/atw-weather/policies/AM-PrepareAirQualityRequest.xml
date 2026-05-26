@@ -8,7 +8,7 @@
     <QueryParams>
       <QueryParam name="latitude">{location.lat}</QueryParam>
       <QueryParam name="longitude">{location.lon}</QueryParam>
-      <QueryParam name="current">pm10,pm2_5,nitrogen_dioxide,ozone,carbon_monoxide,european_aqi</QueryParam> <!--Most popular AIQ types-->
+      <QueryParam name="current">pm10,pm2_5,nitrogen_dioxide,ozone,carbon_monoxide,european_aqi</QueryParam> <!--Most popular AQI types-->
     </QueryParams>
   </Set>
   <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>

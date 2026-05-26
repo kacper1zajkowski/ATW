@@ -58,7 +58,7 @@ flowchart TD
     PrepGeo --> Round
     Round --> Lookup(["Lookup cache"])
     Lookup --> n2@{ shape: "diam", label: "HIT or MISS?" }
-    n2 -->|"MISS"| n4@{ shape: "stadium", label: "Ask for weather, AIQ, Pollen, astro data & put it into nice structure" }
+    n2 -->|"MISS"| n4@{ shape: "stadium", label: "Ask for weather, AQI, Pollen, astro data & put it into nice structure" }
     n2 -->|"HIT"| n3@{ shape: "stadium", label: "use cached data" }
     n4 --> n5["Build response + Cache status"]
     n3 --> n5
