@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Github } from 'lucide-react';
 import { useWeatherData } from './hooks/useWeatherData';
 import { SearchBar } from './components/SearchBar';
 import { Dashboard } from './components/Dashboard';
@@ -71,6 +72,18 @@ export default function App() {
           </div>
         )}
       </div>
+
+      <footer className="fixed bottom-3 left-1/2 -translate-x-1/2">
+        <a
+          href="https://github.com/kacper1zajkowski/ATW"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition-colors"
+        >
+          <Github size={14} />
+          <span>kacper1zajkowski/ATW</span>
+        </a>
+      </footer>
     </div>
   );
 }
