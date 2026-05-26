@@ -4,13 +4,20 @@ import { TextureLoader } from 'three';
 import { Moon } from 'lucide-react';
 import { BaseTile } from './BaseTile';
 
+const BASELINE_VY = 0.25;
+const DRAG_SENSITIVITY = 0.008;
+const IMPULSE_DECAY = 1.0;
+const FLICK_WINDOW_MS = 100;
+
 function MoonSphere({ phaseIndex }) {
   const meshRef = useRef();
   const texture = useLoader(TextureLoader, '/moon-color.jpg');
-  const dragging = useRef(false);
-  const prev = useRef({ x: 0, y: 0 });
-  const vel = useRef({ x: 0, y: 0 });
   const { gl } = useThree();
+
+  const dragging = useRef(false);
+  const lastPointer = useRef({ x: 0, t: 0 });
+  const recent = useRef([]);
+  const impulse = useRef(0);
 
   const angle = Math.PI * (1 - phaseIndex / 4);
   const lightX = Math.sin(angle) * 3;
@@ -20,25 +27,50 @@ function MoonSphere({ phaseIndex }) {
     const canvas = gl.domElement;
     canvas.style.cursor = 'grab';
 
+    const onDown = (e) => {
+      dragging.current = true;
+      lastPointer.current = { x: e.clientX, t: performance.now() };
+      recent.current = [];
+      canvas.style.cursor = 'grabbing';
+    };
+
     const onMove = (e) => {
       if (!dragging.current || !meshRef.current) return;
-      const dx = e.clientX - prev.current.x;
-      const dy = e.clientY - prev.current.y;
-      vel.current = { x: dx * 0.01, y: dy * 0.01 };
-      meshRef.current.rotation.y += vel.current.x;
-      meshRef.current.rotation.x += vel.current.y;
-      prev.current = { x: e.clientX, y: e.clientY };
+      const now = performance.now();
+      const dx = e.clientX - lastPointer.current.x;
+
+      meshRef.current.rotation.y += dx * DRAG_SENSITIVITY;
+
+      recent.current.push({ dx, t: now });
+      while (recent.current.length && now - recent.current[0].t > FLICK_WINDOW_MS) {
+        recent.current.shift();
+      }
+      lastPointer.current = { x: e.clientX, t: now };
     };
 
     const onUp = () => {
+      if (!dragging.current) return;
       dragging.current = false;
       canvas.style.cursor = 'grab';
+
+      if (recent.current.length > 0) {
+        const now = performance.now();
+        const windowMs = now - recent.current[0].t;
+        if (windowMs > 0) {
+          let totalDx = 0;
+          for (const m of recent.current) totalDx += m.dx;
+          impulse.current += (totalDx / windowMs) * 1000 * DRAG_SENSITIVITY;
+        }
+      }
+      recent.current = [];
     };
 
+    canvas.addEventListener('pointerdown', onDown);
     canvas.addEventListener('pointermove', onMove);
     canvas.addEventListener('pointerup', onUp);
     canvas.addEventListener('pointerleave', onUp);
     return () => {
+      canvas.removeEventListener('pointerdown', onDown);
       canvas.removeEventListener('pointermove', onMove);
       canvas.removeEventListener('pointerup', onUp);
       canvas.removeEventListener('pointerleave', onUp);
@@ -46,37 +78,17 @@ function MoonSphere({ phaseIndex }) {
   }, [gl]);
 
   useFrame((_, delta) => {
-    if (!meshRef.current) return;
-    if (dragging.current) return;
+    if (!meshRef.current || dragging.current) return;
 
-    const speed = Math.sqrt(vel.current.x ** 2 + vel.current.y ** 2);
-    if (speed > 0.0005) {
-      // inertia decay after releasing
-      meshRef.current.rotation.y += vel.current.x;
-      meshRef.current.rotation.x += vel.current.y;
-      vel.current.x *= 0.92;
-      vel.current.y *= 0.92;
-    } else {
-      // auto-rotate + slowly level out X tilt
-      vel.current = { x: 0, y: 0 };
-      meshRef.current.rotation.y += delta * 0.08;
-      meshRef.current.rotation.x *= 0.97;
-    }
+    meshRef.current.rotation.y += (BASELINE_VY + impulse.current) * delta;
+    impulse.current *= Math.exp(-IMPULSE_DECAY * delta);
   });
 
   return (
     <>
       <ambientLight intensity={0.08} color="#2a3f6f" />
       <directionalLight position={[lightX, 1, lightZ]} intensity={1.6} color="#c8dcff" />
-      <mesh
-        ref={meshRef}
-        onPointerDown={(e) => {
-          vel.current = { x: 0, y: 0 };
-          dragging.current = true;
-          prev.current = { x: e.clientX, y: e.clientY };
-          gl.domElement.style.cursor = 'grabbing';
-        }}
-      >
+      <mesh ref={meshRef}>
         <sphereGeometry args={[1.1, 64, 64]} />
         <meshStandardMaterial map={texture} />
       </mesh>
