@@ -2,17 +2,20 @@ import { useState } from 'react';
 import { Flower2, X } from 'lucide-react';
 import { BaseTile } from './BaseTile';
 
-const RISK_COLOR = {
-  'Low':       { badge: 'bg-emerald-400/15 text-emerald-400', dot: 'bg-emerald-400' },
-  'Moderate':  { badge: 'bg-amber-400/15  text-amber-400',   dot: 'bg-amber-400'   },
-  'High':      { badge: 'bg-orange-400/15 text-orange-400',  dot: 'bg-orange-400'  },
-  'Very High': { badge: 'bg-red-400/15    text-red-400',     dot: 'bg-red-400'     },
+const RISK_SEV = {
+  'Low':       'var(--sev-1)',
+  'Moderate':  'var(--sev-3)',
+  'High':      'var(--sev-4)',
+  'Very High': 'var(--sev-5)',
 };
 
 function RiskBadge({ risk }) {
-  const cfg = RISK_COLOR[risk] ?? RISK_COLOR['Low'];
+  const sev = RISK_SEV[risk] ?? RISK_SEV['Low'];
   return (
-    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${cfg.badge}`}>
+    <span
+      className="sev-badge rounded-pill px-2 py-0.5 font-mono text-[10px] uppercase tracking-label"
+      style={{ '--sev': sev }}
+    >
       {risk}
     </span>
   );
@@ -25,19 +28,19 @@ function SpeciesSection({ title, risk, count, species }) {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-1">
-        <span className="text-sm font-semibold text-slate-200">{title}</span>
+      <div className="mb-1 flex items-center justify-between">
+        <span className="text-sm font-semibold text-ink">{title}</span>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400">{count} grains/m³</span>
+          <span className="font-mono text-[10px] text-ink-3">{count} grains/m³</span>
           <RiskBadge risk={risk} />
         </div>
       </div>
       {nonZero.length > 0 && (
         <ul className="mt-1.5 space-y-1">
           {nonZero.map(([name, val]) => (
-            <li key={name} className="flex items-center justify-between text-sm text-slate-400">
+            <li key={name} className="flex items-center justify-between text-sm text-ink-2">
               <span>{name}</span>
-              <span className="tabular-nums text-slate-500">{val}</span>
+              <span className="tabular-nums text-ink-3">{val}</span>
             </li>
           ))}
         </ul>
@@ -61,20 +64,20 @@ export function PollenTile({ pollen, index }) {
     <>
       <BaseTile
         title="Pollen"
-        icon={<Flower2 size={14} className="text-lime-400" />}
-        accentColor="border-l-lime-500"
+        icon={<Flower2 size={14} className="text-ink-2" />}
+        idx={6}
         index={index}
       >
         <div className="space-y-3">
           {categories.map(({ key, label, risk, count }) => {
-            const cfg = RISK_COLOR[risk] ?? RISK_COLOR['Low'];
+            const sev = RISK_SEV[risk] ?? RISK_SEV['Low'];
             return (
               <div key={key} className="flex items-center justify-between">
-                <span className="text-sm text-slate-300">{label}</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-500">{count}</span>
+                <span className="text-sm text-ink">{label}</span>
+                <div className="flex items-center gap-2" style={{ '--sev': sev }}>
+                  <span className="font-mono text-[10px] text-ink-3">{count}</span>
                   <RiskBadge risk={risk} />
-                  <div className={`h-2 w-2 rounded-full ${cfg.dot}`} />
+                  <div className="sev-bar h-2 w-2 rounded-full" />
                 </div>
               </div>
             );
@@ -84,7 +87,7 @@ export function PollenTile({ pollen, index }) {
         {pollen.species && (
           <button
             onClick={() => setOpen(true)}
-            className="mt-4 w-full text-left text-xs text-slate-500 hover:text-slate-300 transition-colors"
+            className="mt-4 w-full text-left font-mono text-[10px] uppercase tracking-label text-ink-3 transition-colors duration-200 hover:text-accent"
           >
             Species breakdown →
           </button>
@@ -93,19 +96,19 @@ export function PollenTile({ pollen, index }) {
 
       {open && pollen.species && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
           onClick={() => setOpen(false)}
         >
           <div
-            className="w-full max-w-md rounded-2xl border border-slate-700/40 bg-slate-800 p-6 shadow-xl"
-            onClick={e => e.stopPropagation()}
+            className="w-full max-w-md rounded-card border border-hairline-strong bg-bg-2 p-6"
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex items-center justify-between border-b border-hairline pb-3">
               <div className="flex items-center gap-2">
-                <Flower2 size={14} className="text-lime-400" />
-                <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">Pollen details</span>
+                <Flower2 size={14} className="text-ink-2" />
+                <span className="font-mono text-[11px] uppercase tracking-label text-ink-2">Pollen details</span>
               </div>
-              <button onClick={() => setOpen(false)} className="text-slate-500 hover:text-slate-200 transition-colors">
+              <button onClick={() => setOpen(false)} className="text-ink-3 transition-colors hover:text-accent">
                 <X size={16} />
               </button>
             </div>

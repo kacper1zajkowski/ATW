@@ -24,11 +24,11 @@ export function SatelliteTile({ location, index }) {
   return (
     <BaseTile
       title="Map view"
-      icon={<Globe size={14} className="text-violet-400" />}
-      accentColor="border-l-violet-500"
+      icon={<Globe size={14} className="text-ink-2" />}
+      idx={5}
       index={index}
     >
-      <div className="overflow-hidden rounded-xl" style={{ height: 192 }}>
+      <div className="overflow-hidden rounded-card border border-hairline" style={{ height: 192 }}>
         <MapContainer
           center={[location.lat, location.lon]}
           zoom={5}

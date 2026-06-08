@@ -21,7 +21,7 @@ function TypewriterText({ text, speed = 18 }) {
     <>
       {displayed}
       {displayed.length < text.length && (
-        <span className="inline-block w-0.5 h-3.5 bg-slate-400 ml-0.5 animate-pulse align-middle" />
+        <span className="ml-0.5 inline-block h-3.5 w-0.5 bg-accent align-middle animate-pulse" />
       )}
     </>
   );
@@ -45,8 +45,8 @@ export function ForecastTile({ forecast, summary, index }) {
   return (
     <BaseTile
       title="6-day forecast"
-      icon={<CloudSun size={14} className="text-sky-400" />}
-      accentColor="border-l-sky-500"
+      icon={<CloudSun size={14} className="text-ink-2" />}
+      idx={4}
       index={index}
     >
       <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
@@ -55,16 +55,16 @@ export function ForecastTile({ forecast, summary, index }) {
           return (
             <div
               key={day.date}
-              className="flex flex-col items-center gap-1 rounded-xl bg-slate-700/30 px-2 py-3 text-center text-sm"
+              className="flex flex-col items-center gap-1.5 rounded-card border border-hairline bg-surface-soft px-2 py-3 text-center text-sm transition-colors duration-200 hover:border-hairline-strong"
             >
-              <span className="text-xs font-medium text-slate-400">{shortDay(day.date)}</span>
-              <Icon size={20} className="text-sky-400" />
-              <div className="mt-0.5">
-                <span className="font-semibold text-slate-100">{day.temp_max_c}°</span>
-                <span className="text-slate-500"> / {day.temp_min_c}°</span>
+              <span className="font-mono text-[10px] uppercase tracking-label text-ink-3">{shortDay(day.date)}</span>
+              <Icon size={20} className="text-ink-2" strokeWidth={1.5} />
+              <div className="mt-0.5 tabular-nums">
+                <span className="font-semibold text-ink">{day.temp_max_c}°</span>
+                <span className="text-ink-3"> / {day.temp_min_c}°</span>
               </div>
-              <span className="flex items-center gap-0.5 text-xs text-blue-400">
-                <Droplets size={10} />{day.precipitation_prob_pct}%
+              <span className="flex items-center gap-0.5 font-mono text-[10px] text-ink-2">
+                <Droplets size={10} className="text-ink-3" />{day.precipitation_prob_pct}%
               </span>
             </div>
           );
@@ -72,7 +72,7 @@ export function ForecastTile({ forecast, summary, index }) {
       </div>
 
       {summary && (
-        <p className="mt-3 border-t border-slate-700/50 pt-3 text-sm leading-relaxed text-slate-300">
+        <p className="mt-4 border-t border-hairline pt-4 text-sm leading-relaxed text-ink-2">
           <TypewriterText text={summary} />
         </p>
       )}
