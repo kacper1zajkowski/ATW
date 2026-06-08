@@ -11,7 +11,7 @@ const FLICK_WINDOW_MS = 100;
 
 function MoonSphere({ phaseIndex }) {
   const meshRef = useRef();
-  const texture = useLoader(TextureLoader, '/moon-color.jpg');
+  const texture = useLoader(TextureLoader, '/assets/moon-color.jpg');
   const { gl } = useThree();
 
   const dragging = useRef(false);
