@@ -44,7 +44,7 @@ export default function App() {
             </h1>
 
             <p className="mt-s4 max-w-[52ch] text-ink-2 text-[16px] leading-[1.6]">
-              Check current conditions, air quality, UV, pollen & a six-day outlook and the moon.
+              Check current conditions, air quality, UV, pollen, a six-day outlook & moon phases.
               Search a city, or drop coordinates.
             </p>
 
