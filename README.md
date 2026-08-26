@@ -1,6 +1,9 @@
 # 🌍 ATW — All Things Weather
 
 > *What's going on outside the window?*
+
+### <span style="color:red">*INFO: project currently undeployed*</span>
+
 ## [atw.zajkowski.cloud](https://atw.zajkowski.cloud/)
 An over-engineered environmental dashboard built as a hands-on case study for **Apigee** as an API aggregation layer. Pulls live weather, air quality, UV, pollen and lunar data from several different providers, all proxied and uniformly authenticated through a single Apigee gateway.
 
